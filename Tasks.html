@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {font-family: Arial;}
+        
+        /* Style the tab */
+        .tab {
+          overflow: hidden;
+          border: 1px solid #ccc;
+          background-color: #f1f1f1;
+        }
+        
+        /* Style the buttons inside the tab */
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+        
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+          background-color: #ddd;
+        }
+        
+        /* Create an active/current tablink class */
+        .tab button.active {
+          background-color: #ccc;
+        }
+        
+        /* Style the tab content */
+        .tabcontent {
+          display: none;
+          padding: 6px 12px;
+          border: 1px solid #ccc;
+          border-top: none;
+        }
+     </style>
+     <script src="jquery-3.5.1.js"></script>
+    
+</head>
+<body>
+
+    <div class="tab">
+        <button class="tablinks" onclick="openTask('task1')">Task1</button>
+        <button class="tablinks" onclick="openTask('task2')">Task2</button>
+        <button class="tablinks" onclick="openTask('task3')">Task3</button>
+        <button class="tablinks" onclick="openTask('task4')">Task4</button>
+    </div>
+
+    <div id="task1" class="tabcontent">
+        <h3>Get Sum of two number and check if the inputs were entered and number format</h3>
+        <label for="">Number:</label>
+        <input type="text" id="n1">
+        <span id="n1Msg"></span>
+        <br>
+        <label for="">Number:</label>
+        <input type="text" id="n2">
+        <span id="n2Msg"></span>
+        <input type="button" id="btn" value="Get Total">
+        
+        <br/>
+        <span id="msg"></span>
+        <br/>
+        <label for="">Total is:</label>
+        <input type="text" id="sum" readonly>
+        <script>
+            $(function(){
+                function Clear(){
+                    $("#task1 #msg").text("");
+                    $("#task1 #n1Msg").text("");
+                    $("#task1 #n2Msg").text("");
+                    $("#task1 #sum").val("");
+                }
+                $("#task1 #n1").keydown(function(e){
+                    if(isNaN(e.key) && e.keyCode!=8){
+                        return false;
+                    }
+                })
+                $("#task1 #n2").keydown(function(e){
+                    if(isNaN(e.key) && e.keyCode!=8){
+                        return false;
+                    }
+                })
+                $("#task1 #btn").click(function(){
+                    Clear();
+                    var n1=$("#task1 #n1").val();
+                    var n2=$("#task1 #n2").val();
+                    var msg="";
+                    if(n1!="" && n2!=""){
+                        $("#task1 #sum").val(parseInt(n1)+parseInt(n2));
+                    }else{
+                        if(n1==""){
+                            $("#task1 #n1Msg").text("*");
+                            msg += "please Enter the first Number";
+                        }
+                        if(n2==""){
+                            $("#task1 #n2Msg").text("*");
+                            msg += " please Enter the Second Number";
+                        }
+                        $("#task1 #msg").text(msg);
+                    }    
+                });
+            });
+        </script>
+    </div>
+
+    <div id="task2" class="tabcontent">
+        <h3>Get the max and min number and check number format and you shouldnot fill all inputs</h3>
+        <label for="">Basic:</label>
+        <input type="text" id="txtBasic">
+        <span id="txtMsg1"></span>
+        <br>
+        <label for="">Bouns:</label>
+        <input type="text" id="txtBouns">
+        <span id="txtMsg2"></span>
+        <br>
+        <label for="">Deduction:</label>
+        <input type="text" id="txtDeduction">
+        <span id="txtMsg3"></span>
+        <br>
+        <select name="" id="taxType">
+            <option value="0">Select Tax Type</option>
+            <option value="10">Basic</option>
+            <option value="20">Advanced</option>
+        </select>
+        <span id="txtMsg4"></span>
+        
+        <input type="button" id="btn" value="Get Net Salary">
+        <input type="button" value="Clear" id="clearbtn" >
+        
+        <br/>
+        <span id="msg"></span>
+        <br/>
+        <label for="">Total is:</label>
+        <input type="text" id="txtNetSalary" readonly>
+        <script>
+
+            $(function(){
+                function clear(flag){
+                    if(flag==0){
+                        $("#task2 #txtBasic").val("");
+                        $("#task2 #txtBouns").val("");
+                        $("#task2 #txtDeduction").val("");
+                        $("#task2 #taxType").val("0");
+                        $("#task2 #txtNetSalary").val("");
+                    }
+                        $("#task2 #txtMsg1").text("");
+                        $("#task2 #txtMsg2").text("")
+                        $("#task2 #txtMsg3").text("")
+                        $("#task2 #txtMsg4").text("");
+                        $("#task2 #msg").text("");
+                }
+                $("#task2 #clearbtn").click(function(){
+                    clear(0);
+                });
+               $("#task2 #btn").click(function(){
+                    var basicVal=$("#task2 #txtBasic").val();
+                    var bounsVal=$("#task2 #txtBouns").val();
+                    var deductionVal=$("#task2 #txtDeduction").val();
+                    var taxTypeVal=$("#task2 #taxType").val();
+                    var stop=0;
+                    var msg="";
+                    
+                    if(basicVal==""){
+                        msg+="the Basic Value is Required <br>";
+                        $("#task2 #txtMsg1").text("*").css("color","red");
+                    }else if(isNaN(basicVal)){
+                        msg+= "the Basic value should be number<br>";
+                    }
+                    if(bounsVal==""){
+                        msg+="the Bouns Value is Required <br>";
+                        $("#task2 #txtMsg2").text("*").css("color","red");
+                    }else if(isNaN(bounsVal)){
+                        msg+= "the bouns value should be number<br>";
+                    }
+                    if(deductionVal==""){
+                        msg+="the Deduction Value is Required <br>";
+                        $("#task2 #txtMsg3").text("*").css("color","red");
+                    }else if(isNaN(deductionVal)){
+                        msg+= "the Deduction value should be number<br>";
+                    }
+                    if(taxTypeVal==0){
+                        msg+="the Tax Type is Required <br>";
+                        $("#task2 #txtMsg4").text("*").css("color","red");
+                    }
+                    if(msg==""){   
+                        var NetSalary=((parseFloat(basicVal)+parseFloat(bounsVal)-parseFloat(deductionVal))*(100-parseInt(taxTypeVal)))/100;
+                        clear(1);
+                        $("#task2 #txtNetSalary").val(NetSalary);
+                    }else{
+                      
+                        $("#task2 #msg").html(msg);
+                    }
+               });
+
+            });
+        </script>
+    </div>
+
+    <div id="task3" class="tabcontent">
+        <h3>End user enter id, Name, Salary and press Add Item button automatic will append to
+            table row.<br>
+             and update count of record. and clear data from inputs.<br>
+            If count less than 5 will appear with color red if not will appear with color green.<br>
+            and delete item can remove record and affect on count of records
+        </h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td>:<input type="text" id="txtID"></td>
+                    <td><span id="txtMsg1"></span></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>:<input type="text" id="txtName"></td>
+                    <td><span id="txtMsg2"></span></td>
+                </tr>
+                <tr>
+                    <td>Salary</td>
+                    <td>:<input type="text" id="txtSalary"></td>
+                    <td><span id="txtMsg3"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" disabled id="btnAdd" value="Add Item" onclick="" style="width:100%;"></td>
+                </tr>
+            </tbody>
+        </table>
+       
+        
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="content">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Counts of records is <span id="numOfRecord">0</span></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        $(function(){
+
+            var disableBtn=[1,1,1];
+            function disableBtnFun(){
+                // for disable the button if any input don't meet the requires 
+                    if(disableBtn[0]==0 && disableBtn[1]==0 && disableBtn[2]==0 ){
+                        $("#task3 #btnAdd").attr('disabled', false);
+                    }else{
+                        $("#task3 #btnAdd").attr('disabled', true);
+                    }
+            };
+
+            // for check the input is string format
+            function isString(str){
+                str=str.toUpperCase();
+                for(var i=0;i<str.length;i++){
+                    if(!(str[i].charCodeAt(0)>=65 && str[i].charCodeAt(0)<=90)){
+                        return false;                        
+                    }
+                }
+                return true;        
+            }
+            
+            $("#task3 #txtID").blur(function txtIDCheck(){
+                disableBtn[0]=1;
+                var Val=$(this).val();
+                if(Val==""){
+                    $("#task3 #txtMsg1").text("* The ID Is Required").css("color","red");
+                    
+                }else if(!$.isNumeric(Val)){
+                    $("#task3 #txtMsg1").text("ID Should be A Number").css("color","red");
+                    
+                }else{
+                    $("#task3 #txtMsg1").text("");
+                    disableBtn[0]=0;
+                    
+                }
+                disableBtnFun();
+            });
+            $("#task3 #txtName").blur(function(){
+                disableBtn[1]=1;
+                var Val=$(this).val();
+                if(Val==""){
+                    $("#task3 #txtMsg2").text("* The Name Is Required").css("color","red");
+                }else if(!isString(Val)){
+                    $("#task3 #txtMsg2").text("The Name Should not contain number or symbol").css("color","red");
+                }else{
+                    $("#task3 #txtMsg2").text("");
+                    disableBtn[1]=0;
+                    
+                }
+                disableBtnFun();
+            }); 
+            $("#task3 #txtSalary").blur(function(){
+                disableBtn[2]=1;
+                var Val=$(this).val();
+                if(Val==""){
+                    $("#task3 #txtMsg3").text("* The Salary Is Required").css("color","red");
+                }else if(!$.isNumeric(Val)){
+                    $("#task3 #txtMsg3").text("The Salary Should be A number").css("color","red");
+                }else{
+                    $("#task3 #txtMsg3").text("");
+                    disableBtn[2]=0;
+                    
+                }
+                disableBtnFun();
+            }); 
+           
+           var RecordCount=parseInt( $("#task3 #numOfRecord").text());
+            $("#task3 #btnAdd").click(function(){
+                $("#task3 #content").append('<tr><td>'+$("#task3 #txtID").val() +'</td><td>'+$("#task3 #txtName").val() 
+                                           +'</td><td>'+$("#task3 #txtSalary").val() +'</td><td><input type="button" class="edit" value="Edit"></td><td><input type="button" value="Del" class="del" ></td></tr>')
+                $("#task3 #txtID").val("");
+                $("#task3 #txtName").val("");
+                $("#task3 #txtSalary").val("");
+
+                disableBtn=[1,1,1];
+                disableBtnFun();
+
+                $("#task3 #numOfRecord").text(++RecordCount);
+            });
+            $("#task3 #content").on("click",".del",function(){
+                var x=  $(this).parent().parent().remove();
+                $("#task3 #numOfRecord").text(--RecordCount);
+            });
+            $("#task3 #content").on("click",".edit",function(){
+                // var oldSalary=$(this).parent().prev().text();
+                // var oldName=$(this).parent().prev().prev().text();
+                // var oldID=$(this).parent().prev().prev().prev().text();
+                // $(this).parent().prev().html("<input type='text' class='txtedit' value='"+ oldSalary +"'>");
+                // $(this).parent().prev().prev().html("<input type='text' class='txtedit' value='"+ oldSalary +"'>");
+                // $(this).parent().prev().prev().prev().html("<input type='text' class='txtedit' value='"+ oldID +"'>");
+
+                // $("#task3 .edit").val("Save").click(function(){
+                //     var newVals=$(this).parent().parent().find("input[type='text']");
+                //     var flagdisable=0;
+                //     var Val=newVals[0];
+                //     if(Val==""){
+                //         $("#task3 #txtMsg1").text("* The ID Is Required").css("color","red");
+                //     }else if(!$.isNumeric(Val)){
+                //         $("#task3 #txtMsg1").text("ID Should be A Number").css("color","red");
+                //     }else{
+                //         $("#task3 #txtMsg1").text("");
+                //     }
+                  
+                  
+               // });
+              
+
+            });
+
+        });
+    </script>
+
+    <div id="task4" class="tabcontent">
+     
+    </div>
+
+  
+
+
+    
+    <script>
+    function openTask(taskName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            // tablinks[i].classList.remove("active"); // we can use this but The classList property is not supported in Internet Explorer 9
+            tablinks[i].className = tablinks[i].className.replace(" active", "");                                                                        
+        }
+        document.getElementById(taskName).style.display = "block";
+        //evt.classList.add("active");
+        this.className +=" active";
+    }
+    </script>
+       
+
+</body>
+</html>
